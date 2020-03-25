@@ -10,7 +10,7 @@ module.exports = (env = {}) => ({
   entry: path.resolve(__dirname, './src/main.ts'),
   output: {
     path: path.resolve(__dirname, './docs'),
-    publicPath: '/',
+    publicPath: '/vue-composition-api-examples/',
   },
   module: {
     rules: [
@@ -58,7 +58,6 @@ module.exports = (env = {}) => ({
     inline: true,
     hot: true,
     stats: 'minimal',
-    contentBase: __dirname,
     overlay: true,
   },
 });

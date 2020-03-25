@@ -1,15 +1,14 @@
 {
-  "name": "vue3-ts",
+  "name": "vue-composition-api-examples",
   "version": "0.1.0",
-  "description": "A Vue 3 demo project using Typescript",
-  "main": "index.js",
+  "description": "A Vue 3 demo project using Typescript and Vue router",
   "author": "dzetah <dzetah@pm.me>",
   "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server",
     "build": "webpack",
-    "build:prod": "webpack --env.prod"
+    "prod": "webpack --env.prod"
   },
   "dependencies": {
     "@posva/vue-router-next": "4.0.0-alpha.0",
@@ -29,7 +28,6 @@
     "vue-loader": "16.0.0-alpha.3",
     "webpack": "^4.42.0",
     "webpack-cli": "^3.3.11",
-    "webpack-dev-server": "^3.10.3",
-    "yarn": "^1.22.4"
+    "webpack-dev-server": "^3.10.3"
   }
 }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>Todo</h2>
+    <h2>TodoMVC</h2>
     <p>A simple TodoMVC synced with local storage.</p>
     <section class="example-section">
       <TodoList />

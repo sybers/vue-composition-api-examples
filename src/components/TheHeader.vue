@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <router-link class="link" :to="{ name: 'todo' }">Todo</router-link>
+    <router-link class="link" :to="{ name: 'todo' }">TodoMVC</router-link>
     <router-link class="link" :to="{ name: 'counter' }">Counter</router-link>
   </header>
 </template>
