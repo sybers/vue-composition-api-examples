@@ -12,12 +12,7 @@
     </header>
     <!-- This section should be hidden by default and shown when there are todos -->
     <section class="main">
-      <input
-        id="toggle-all"
-        class="toggle-all"
-        type="checkbox"
-        @click="toggleAll"
-      />
+      <input id="toggle-all" class="toggle-all" type="checkbox" @click="toggleAll" />
       <label for="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
         <!-- These are here just to show the structure of the list items -->
@@ -44,11 +39,7 @@
       >
       <!-- Remove this if you don't implement routing -->
       <TodoFilters :filter="filter" @change="filter = $event" />
-      <button
-        class="clear-completed"
-        @click="clearCompleted"
-        v-if="countRemaining !== count"
-      >
+      <button class="clear-completed" @click="clearCompleted" v-if="countRemaining !== count">
         Clear completed
       </button>
     </footer>
@@ -56,18 +47,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch } from "vue";
-import { useTodos, useLocalStorage } from "@/composables";
-import TodoListItem from "@/components/TodoListItem.vue";
-import TodoFilters from "@/components/TodoFilters.vue";
+import { defineComponent, ref, computed, watch } from 'vue';
+import 'todomvc-app-css/index.css';
+
+import { useTodos, useLocalStorage } from '@/composables';
+import TodoListItem from '@/components/TodoListItem.vue';
+import TodoFilters from '@/components/TodoFilters.vue';
 
 export default defineComponent({
-  name: "TodoList",
+  name: 'TodoList',
   components: { TodoListItem, TodoFilters },
   setup() {
     const todosEffect = useTodos();
-    useLocalStorage("vue-3-ts-todos", todosEffect.todos, []);
-    const todoText = ref("");
+    useLocalStorage('vue-3-ts-todos', todosEffect.todos, []);
+    const todoText = ref('');
     const editTodo = ref(null);
 
     const create = () => {
@@ -76,12 +69,11 @@ export default defineComponent({
       }
 
       todosEffect.add({ text: todoText.value });
-      todoText.value = "";
+      todoText.value = '';
     };
 
     const toggleAll = () => {
-      const nextState =
-        todosEffect.countCompleted.value !== todosEffect.count.value;
+      const nextState = todosEffect.countCompleted.value !== todosEffect.count.value;
       todosEffect.todos.value.forEach(item => (item.completed = nextState));
     };
 
@@ -90,9 +82,9 @@ export default defineComponent({
       todoText,
       editTodo,
       create,
-      toggleAll
+      toggleAll,
     };
-  }
+  },
 });
 </script>
 

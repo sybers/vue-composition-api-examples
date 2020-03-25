@@ -1,28 +1,19 @@
-import { ref, watch, computed, toRefs } from "vue";
-import { minmax } from "./utils";
+import { ref, watch, toRefs, isReactive, reactive } from 'vue';
+import { minmax } from './utils';
 
 interface UseCounterConfig {
-  initial: number;
+  value: number;
   min: number;
   max: number;
   step: number;
 }
 
 export default (config: UseCounterConfig) => {
-  const {
-    initial = ref(0),
-    min = ref(0),
-    max = ref(Infinity),
-    step = ref(1)
-  } = toRefs(config);
+  const { value = ref(0), min = ref(0), max = ref(Infinity), step = ref(1) } = toRefs(
+    isReactive(config) ? config : reactive(config)
+  );
 
-  const _counter = ref(initial);
-
-  // computed
-  const counter = computed({
-    get: () => _counter.value,
-    set: value => set(value)
-  });
+  const _counter = value;
 
   // limit counter to its min and max values
   watch([_counter, min, max], () => {
@@ -37,18 +28,15 @@ export default (config: UseCounterConfig) => {
   const decrement = () => {
     _counter.value = _counter.value - step.value;
   };
-  const reset = () => {
-    _counter.value = initial.value;
-  };
-  const set = (value: number) => {
-    _counter.value = value;
-  };
 
   return {
-    counter,
-    set,
+    // state
+    value,
+    min,
+    max,
+    step,
+    // methods
     increment,
     decrement,
-    reset
   };
 };

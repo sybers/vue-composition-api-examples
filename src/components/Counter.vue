@@ -1,60 +1,56 @@
 <template>
-  <div>
-    <div class="counter">
-      <input class="counter__value" type="number" v-model="counter" />
-      <div class="counter__controls">
-        <button class="counter__button" @click="decrement">-</button>
-        <button class="counter__button" @click="increment">+</button>
-      </div>
-      <div class="counter__bottom">
-        <button class="counter__button" @click="reset">Reset</button>
-      </div>
-    </div>
-
-    <div>
-      <label for="">min</label>
-      <input type="number" v-model="min" />
-      <br />
-      <label for="">max</label>
-      <input type="number" v-model="max" />
+  <div class="counter">
+    <input class="counter__value" type="number" :step="step" v-model="value" />
+    <div class="counter__controls">
+      <button class="counter__button" @click="decrement">-</button>
+      <button class="counter__button" @click="increment">+</button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, watch, ref, reactive } from "vue";
-import { useCounter, useDocumentTitle } from "@/composables";
+import { defineComponent, watch, ref, reactive } from 'vue';
+import { useDocumentTitle } from '@/composables';
+import counterStore from '@/stores/counter';
 
 export default defineComponent({
-  name: "Counter",
-  props: {
-    value: {
-      type: Number,
-      default: 0
-    }
-  },
-  setup(props, context) {
-    const min = ref(0);
-    const max = ref(10);
-    const counterConfig = reactive({
-      initial: props.value,
-      min,
-      max,
-      step: 1
-    });
-
-    const counterEffect = useCounter(counterConfig);
-    useDocumentTitle(counterEffect.counter);
-
-    watch(counterEffect.counter, newValue => {
-      context.emit("change", newValue);
-    });
-
+  name: 'Counter',
+  setup() {
     return {
-      ...counterEffect,
-      min,
-      max
+      ...counterStore,
     };
-  }
+  },
 });
 </script>
+
+<style scoped>
+.counter__value {
+  box-sizing: border-box;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-radius: 2px;
+  outline: none;
+  background-color: transparent;
+  font-size: 2.2rem;
+  text-align: center;
+  width: 100%;
+  padding: 12px;
+}
+
+.counter__value:focus {
+  border-color: rgba(0, 0, 0, 0.6);
+}
+
+.counter__controls {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 12px;
+}
+
+.counter__button {
+  font-size: 2rem;
+  padding: 8px 40px;
+  cursor: pointer;
+}
+</style>

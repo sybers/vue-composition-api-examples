@@ -1,4 +1,4 @@
-import { ref, Ref, computed, reactive, toRefs } from "vue";
+import { ref, Ref, computed, reactive, toRefs } from 'vue';
 
 export interface Todo {
   text: string;
@@ -21,18 +21,16 @@ export default function useTodos() {
   const todosWithFilter = computed(() => withFilter(filter.value));
   const count = computed(() => todos.value.length);
   const countRemaining = computed(() => withFilter(TODOS_FILTER_ACTIVE).length);
-  const countCompleted = computed(
-    () => withFilter(TODOS_FILTER_COMPLETED).length
-  );
+  const countCompleted = computed(() => withFilter(TODOS_FILTER_COMPLETED).length);
 
   //methods
   const add = (...items: Partial<Todo>[]) => {
     for (const item of items) {
       todos.value.push({
-        text: "",
+        text: '',
         completed: false,
         createdAt: Date.now(),
-        ...item
+        ...item,
       });
     }
   };
@@ -65,6 +63,6 @@ export default function useTodos() {
     add,
     remove,
     clearCompleted,
-    setFilter
+    setFilter,
   };
 }

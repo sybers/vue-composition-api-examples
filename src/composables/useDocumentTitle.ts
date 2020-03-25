@@ -1,10 +1,20 @@
-import { Ref, watch } from "vue";
+import { Ref, watch, onBeforeUnmount } from 'vue';
 
-export default function useDocumentTitle(ref: Ref) {
+type RefTitleExtractor<T> = (ref: Ref<T>) => string;
+
+export default function useDocumentTitle<T = any>(
+  ref: Ref<T>,
+  extractor: RefTitleExtractor<T>
+) {
+  const initialDocumentTitle = document.title;
+
   const setDocumentTitle = () => {
-    document.title = ref.value;
+    document.title = extractor(ref);
   };
 
-  watch(ref, setDocumentTitle);
-  setDocumentTitle();
+  watch(ref, setDocumentTitle, { immediate: true });
+
+  onBeforeUnmount(() => {
+    document.title = initialDocumentTitle;
+  });
 }

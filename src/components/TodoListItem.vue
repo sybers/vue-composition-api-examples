@@ -5,40 +5,53 @@
         class="toggle"
         type="checkbox"
         :checked="completed"
-        @change="$emit('update:completed', !completed)"
+        @change="onUpdateCompleted(!completed)"
       />
-      <label @dblclick="$emit('edit', true)">{{ text }}</label>
-      <button class="destroy" @click="$emit('remove')"></button>
+      <label @dblclick="onEdit(true)">{{ text }}</label>
+      <button class="destroy" @click="onRemove"></button>
     </div>
     <input
       class="edit"
       :value="text"
-      @input="$emit('update:text', $event.target.value)"
-      @keyup.enter="$emit('edit', false)"
-      @blur="$emit('edit', false)"
+      @input="onUpdateText($event.target.value)"
+      @keyup.enter="onEdit(false)"
+      @blur="onEdit(false)"
     />
   </li>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, Ref, onMounted } from "vue";
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: "TodoListItem",
+  name: 'TodoListItem',
   props: {
     text: {
       type: String,
-      required: true
+      required: true,
     },
     completed: {
       type: Boolean,
-      required: true
+      required: true,
     },
     editing: {
       type: Boolean,
-      default: false
-    }
-  }
+      default: false,
+    },
+  },
+  setup(_, { emit }) {
+    const onUpdateCompleted = (value: boolean) => emit('update:completed', value);
+    const onUpdateText = (value: string) => emit('update:text', value);
+    const onEdit = (value: string | false) => emit('edit', value);
+    const onRemove = () => emit('remove');
+
+    return {
+      onUpdateCompleted,
+      onUpdateText,
+      onEdit,
+      onRemove,
+    };
+  },
 });
 </script>
 
