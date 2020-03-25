@@ -11,6 +11,7 @@ module.exports = (env = {}) => ({
   output: {
     path: path.resolve(__dirname, './docs'),
     publicPath: '/vue-composition-api-examples/',
+    filename: '[hash].bundle.js',
   },
   module: {
     rules: [
