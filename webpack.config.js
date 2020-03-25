@@ -1,13 +1,16 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = (env = {}) => ({
   mode: env.prod ? 'production' : 'development',
   devtool: env.prod ? 'source-map' : 'cheap-module-eval-source-map',
   entry: path.resolve(__dirname, './src/main.ts'),
   output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, './docs'),
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -24,7 +27,7 @@ module.exports = (env = {}) => ({
       },
       {
         test: /\.css$/,
-        loader: ['style-loader', 'css-loader'],
+        loader: [env.prod ? MiniCssExtractPlugin.loader : 'style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -43,7 +46,14 @@ module.exports = (env = {}) => ({
       '@': path.resolve(__dirname, 'src'),
     },
   },
-  plugins: [new VueLoaderPlugin()],
+  plugins: [
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin(),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
+  ],
   devServer: {
     inline: true,
     hot: true,

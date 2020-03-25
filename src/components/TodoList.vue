@@ -35,7 +35,8 @@
     <footer class="footer" v-if="count > 0">
       <!-- This should be `0 items left` by default -->
       <span class="todo-count"
-        ><strong>{{ countRemaining }}</strong> item left</span
+        ><strong>{{ countRemaining }}</strong>
+        {{ countRemaining === 1 ? 'item' : 'items' }} left</span
       >
       <!-- Remove this if you don't implement routing -->
       <TodoFilters :filter="filter" @change="filter = $event" />
